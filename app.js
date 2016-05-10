@@ -21,6 +21,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.get('/cube', function(req, res) {
+  res.render('cube');
+});
+app.get('/cube_rotate', function(req, res) {
+  res.render('cube_rotate');
+});
+app.get('/cube_orbit', function(req, res) {
+  res.render('cube_orbit');
+});
+
+
 app.use('/', routes);
 
 // catch 404 and forward to error handler
