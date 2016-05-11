@@ -22,6 +22,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+app.get('/webgl/triangle', function(req, res) {
+  res.render('webgl/triangle');
+});
+
 app.get('/cube', function(req, res) {
   res.render('cube');
 });
