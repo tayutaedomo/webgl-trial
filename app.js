@@ -26,14 +26,14 @@ app.get('/webgl/triangle', function(req, res) {
   res.render('webgl/triangle');
 });
 
-app.get('/cube', function(req, res) {
-  res.render('cube');
+app.get('/threejs/cube', function(req, res) {
+  res.render('threejs/cube');
 });
-app.get('/cube_rotate', function(req, res) {
-  res.render('cube_rotate');
+app.get('/threejs/cube_rotate', function(req, res) {
+  res.render('threejs/cube_rotate');
 });
-app.get('/cube_orbit', function(req, res) {
-  res.render('cube_orbit');
+app.get('/threejs/cube_orbit', function(req, res) {
+  res.render('threejs/cube_orbit');
 });
 
 
