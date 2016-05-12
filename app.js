@@ -35,6 +35,9 @@ app.get('/threejs/cube_rotate', function(req, res) {
 app.get('/threejs/cube_orbit', function(req, res) {
   res.render('threejs/cube_orbit');
 });
+app.get('/threejs/lookat', function(req, res) {
+  res.render('threejs/lookat');
+});
 
 
 app.use('/', routes);
