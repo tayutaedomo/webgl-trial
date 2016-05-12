@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Rotate camera</title>
+    <script type="text/javascript" src="/javascripts/three.js"></script>
+  </head>
+  <body>
+    <script>
+      var scene = new THREE.Scene();
+
+      var fov = 75;
+
+      var height = 600;
+      var width = 400;
+      var aspect = height/width;
+
+      var near = 1;
+      var far = 1000;
+
+      var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+      camera.position.set(0, 0, 70);
+
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize(height, width);
+      document.body.appendChild(renderer.domElement);
+
+      var color = 'white';
+      var directionalLight = new THREE.DirectionalLight(color);
+      directionalLight.position.set(0, 7, 10);
+      scene.add(directionalLight);
+
+      var geometry = new THREE.CubeGeometry(20, 20, 20);
+      var material = new THREE.MeshPhongMaterial({color: 'orange'});
+      cube = new THREE.Mesh(geometry, material);
+      cube.position.set(0, 0, 0);
+      scene.add(cube);
+
+      // Refer: https://ics.media/entry/2632
+      var rot = 0;
+
+      function render() {
+        requestAnimationFrame(render);
+
+        rot += 0.5; // 毎フレーム角度を0.5度ずつ足していく
+
+        // 角度に応じてカメラの位置を設定
+        var coefficient = 100;
+        var x = coefficient * Math.sin(rot * Math.PI / 180);
+        var z = coefficient * Math.cos(rot * Math.PI / 180);
+        camera.position.set(x, 0, z);
+
+        // 原点方向を見つめる
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        // 常に回転させておく
+        cube.rotation.x -= 0.01;
+        cube.rotation.y -= 0.01;
+
+        renderer.render(scene, camera);
+      }
+
+      render();
+    </script>
+  </body>
+</html>
+
