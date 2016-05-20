@@ -41,6 +41,9 @@ app.get('/threejs/lookat', function(req, res) {
 app.get('/threejs/lookat_2', function(req, res) {
   res.render('threejs/lookat_2');
 });
+app.get('/threejs/css3d', function(req, res) {
+  res.render('threejs/css3d');
+});
 
 
 app.use('/', routes);
