@@ -21,31 +21,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.get('/webgl/triangle', function(req, res) {
-  res.render('webgl/triangle');
-});
-
-app.get('/threejs/cube', function(req, res) {
-  res.render('threejs/cube');
-});
-app.get('/threejs/cube_rotate', function(req, res) {
-  res.render('threejs/cube_rotate');
-});
-app.get('/threejs/cube_orbit', function(req, res) {
-  res.render('threejs/cube_orbit');
-});
-app.get('/threejs/lookat', function(req, res) {
-  res.render('threejs/lookat');
-});
-app.get('/threejs/lookat_2', function(req, res) {
-  res.render('threejs/lookat_2');
-});
-app.get('/threejs/css3d', function(req, res) {
-  res.render('threejs/css3d');
-});
-
-
 app.use('/', routes);
 
 // catch 404 and forward to error handler
@@ -81,3 +56,4 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
