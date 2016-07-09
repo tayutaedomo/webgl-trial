@@ -32,6 +32,7 @@
       var scene;
       var renderer;
       var controls;
+      var group;
 
       var Element = function(id, x, y, z, ry) {
         var div = document.createElement('div');
@@ -73,7 +74,7 @@
 
         container.appendChild(renderer.domElement);
 
-        var group = new THREE.Group();
+        group = new THREE.Group();
         group.add(new Element('njCDZWTI-xg', 0, 0, 240, 0));
         group.add(new Element('HDh4uK9PvJU', 240, 0, 0, Math.PI / 2));
         group.add(new Element('OX9I1KyNa8M', 0, 0, - 240, Math.PI));
@@ -102,6 +103,9 @@
       function animate() {
         requestAnimationFrame(animate);
         controls.update();
+
+        group.rotation.y += 0.005;
+
         renderer.render(scene, camera);
       }
     </script>
