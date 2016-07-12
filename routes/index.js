@@ -38,5 +38,9 @@ router.get('/threejs/css3d_youtube_sprite', function(req, res) {
   res.render('threejs/css3d_youtube_sprite');
 });
 
+router.get('/threejs/load_obj', function(req, res) {
+  res.render('threejs/load_obj');
+});
+
 module.exports = router;
 
