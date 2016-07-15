@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Three.js Attendant Moving with Camera</title>
+    <script type="text/javascript" src="/javascripts/three.js"></script>
+  </head>
+  <body>
+    <script>
+      // Refer: http://qiita.com/edo_m18/items/f74236c6b1bd26e838a1
+
+      var renderer = new THREE.WebGLRenderer({antialias: true});
+      renderer.setClearColor(0x000000);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
+      renderer.setScissor(0, 0, window.innerWidth, window.innerHeight);
+
+      document.body.appendChild(renderer.domElement);
+
+      var scene  = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 100;
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+      // box
+      var boxGeo = new THREE.BoxGeometry(20, 20, 20);
+      var boxMat = new THREE.MeshLambertMaterial({
+        color: 0x0000ff
+      });
+      var box = new THREE.Mesh(boxGeo, boxMat);
+      //box.position.x = 0;
+      //box.position.z = 10;
+      //box.rotation.y = Math.PI / 4;
+      scene.add(box);
+      console.log('box.scale', box.scale);
+      console.log('box.position', box.position);
+      attendant_moving();
+
+      var boxGeo2 = new THREE.BoxGeometry(20, 20, 20);
+      var boxMat2 = new THREE.MeshLambertMaterial({
+        color: 0xff0000
+      });
+      var box2 = new THREE.Mesh(boxGeo2, boxMat2);
+      box2.position.x = 30;
+      box2.position.z = 10;
+      box2.rotation.y = Math.PI / 4;
+      scene.add(box2);
+
+      var boxGeo3 = new THREE.BoxGeometry(20, 20, 20);
+      var boxMat3 = new THREE.MeshLambertMaterial({
+        color: 0x00ff00
+      });
+      var box3 = new THREE.Mesh(boxGeo3, boxMat3);
+      box3.position.x = -30;
+      box3.position.z = 10;
+      box3.rotation.y = Math.PI / 4;
+      scene.add(box3);
+
+      // light
+      var light = new THREE.DirectionalLight(0xfffffff);
+      light.position.set(1, 1, 1);
+      scene.add(light);
+
+      var ambient = new THREE.AmbientLight(0x666666);
+      scene.add(ambient);
+
+      var prev = { x: 0, y: 0 };
+      var dragging = false;
+      document.addEventListener('mousedown', function (e) {
+        prev.x = e.pageX;
+        prev.y = e.pageY;
+        dragging = true;
+      }, false);
+      document.addEventListener('mouseup', function (e) {
+        dragging = false;
+      }, false);
+      document.addEventListener('mousemove', function (e) {
+        if (!dragging) {
+          return;
+        }
+        var deltaX = e.pageX - prev.x;
+        var deltaY = e.pageY - prev.y;
+
+        camera.rotation.x += deltaY / 30;
+        camera.rotation.y += deltaX / 30;
+
+        attendant_moving();
+
+        prev.x = e.pageX;
+        prev.y = e.pageY;
+      }, false);
+
+      function attendant_moving() {
+        camera.matrixWorld.decompose(box.position, box.quaternion, box.scale);
+
+        var forward = new THREE.Vector4(0, 0, 1, 0);
+        forward.applyMatrix4(camera.matrix).normalize();
+        forward.multiplyScalar(-85);
+        box.position.add(forward);
+
+        box.scale.set(0.1, 0.1, 0.1);
+
+        console.log('box.scale', box.scale);
+        console.log('box.position', box.position);
+      }
+
+      function render() {
+        requestAnimationFrame(render);
+        renderer.render(scene, camera);
+      }
+      render();
+    </script>
+  </body>
+</html>
+
