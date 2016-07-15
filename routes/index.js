@@ -42,5 +42,9 @@ router.get('/threejs/load_obj', function(req, res) {
   res.render('threejs/load_obj');
 });
 
+router.get('/threejs/attendant_moving', function(req, res) {
+  res.render('threejs/attendant_moving');
+});
+
 module.exports = router;
 
