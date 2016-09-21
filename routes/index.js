@@ -18,6 +18,10 @@ router.get('/threejs/cube_rotate', function(req, res) {
   res.render('threejs/cube_rotate');
 });
 
+router.get('/threejs/cube_rotate_capture', function(req, res) {
+  res.render('threejs/cube_rotate_capture');
+});
+
 router.get('/threejs/cube_orbit', function(req, res) {
   res.render('threejs/cube_orbit');
 });
