@@ -10,6 +10,10 @@ router.get('/webgl/triangle', function(req, res) {
   res.render('webgl/triangle');
 });
 
+router.get('/threejs/plane', function(req, res) {
+  res.render('threejs/plane');
+});
+
 router.get('/threejs/cube', function(req, res) {
   res.render('threejs/cube');
 });
