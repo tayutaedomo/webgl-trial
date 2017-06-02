@@ -58,14 +58,6 @@ router.get('/threejs/attendant_moving_camera', function(req, res) {
   res.render('threejs/attendant_moving_camera');
 });
 
-router.get('/canvas/text', function(req, res) {
-  res.render('canvas/text');
-});
-
-router.get('/canvas/text_2', function(req, res) {
-  res.render('canvas/text_2');
-});
-
 
 module.exports = router;
 
