@@ -19,5 +19,10 @@ router.get('/video', function(req, res) {
   res.render('canvas/video');
 });
 
+router.get('/video_2', function(req, res) {
+  res.render('canvas/video_2');
+});
+
+
 module.exports = router;
 
