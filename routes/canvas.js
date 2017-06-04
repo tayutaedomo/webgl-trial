@@ -15,6 +15,10 @@ router.get('/text_3', function(req, res) {
   res.render('canvas/text_3');
 });
 
+router.get('/text_4', function(req, res) {
+  res.render('canvas/text_4');
+});
+
 router.get('/video', function(req, res) {
   res.render('canvas/video');
 });
