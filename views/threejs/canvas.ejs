@@ -34,32 +34,27 @@
   directionalLight.position.set(0, 7, 10);
   scene.add(directionalLight);
 
-  // Refer:
-  //キャンバステクスチャ作り
-  function set_texture() {
-    //テクスチャ
+  function setTexture() {
     canvas = document.createElement('canvas');
     canvas.width = 128;
     canvas.height = 128;
     textContext = canvas.getContext('2d');
     textContext.font = "48px 'ＭＳ Ｐゴシック'";
 
-    textContext.fillStyle = "rgb(200, 30, 100)";
+    textContext.fillStyle = "red";
     textContext.fillText("札幌", 0, 40);
 
     document.body.appendChild(canvas);
 
-    //↓ここ追加した
-    texture = new THREE.Texture(canvas);
-    return texture;
+    return new THREE.CanvasTexture(canvas);
   }
 
   var geometry = new THREE.PlaneGeometry(40, 40, 1, 1);
-  var material = new THREE.MeshPhongMaterial({ map: set_texture(), color: 'orange'});
-  //var material = new THREE.MeshBasicMaterial({ map: set_texture(), color: 'orange'});
+  var material = new THREE.MeshBasicMaterial({ map: setTexture(), color: 'orange'});
   var plane = new THREE.Mesh(geometry, material);
+
   plane.position.set(0, 0, 0);
-  plane.material.map.needsUpdate = true; // Needed!!
+
   scene.add(plane);
 
   function render() {
