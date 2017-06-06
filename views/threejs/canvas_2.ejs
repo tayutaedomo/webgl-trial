@@ -11,6 +11,8 @@
 </p>
 
 <script>
+  THREE.ImageUtils.crossOrigin = '';
+
   var scene = new THREE.Scene();
 
   var fov = 75;
@@ -56,16 +58,13 @@
     var DOMURL = self.URL || self.webkitURL || self;
     var url = DOMURL.createObjectURL(svg);
     var image = new Image();
-    console.log('url', url);
+    image.crossOrigin = "Anonymous";
+    image.src = url;
 
     image.onload = function() {
-      console.log('image.onload');
-      //context.drawImage(image, 0, 0);
-      //DOMURL.revokeObjectURL(url);
+      DOMURL.revokeObjectURL(url);
       callback({ image: image, context: context, canvas: canvas });
     };
-
-    image.src = url;
 
     context.font = "48px 'ＭＳ Ｐゴシック'";
     context.fillStyle = "rgb(200, 30, 100)";
@@ -77,12 +76,16 @@
   }
 
   createCanvas(128, 128, function(payload) {
+    console.log('callback image', payload.image);
+
     payload.context.drawImage(payload.image, 0, 0);
 
     var texture = new THREE.CanvasTexture(payload.canvas);
 
     var geometry = new THREE.PlaneGeometry(40, 40, 1, 1);
     var material = new THREE.MeshBasicMaterial({ map: texture, color: 'orange'});
+    material.map.minFilter = THREE.LinearFilter;
+
     var plane = new THREE.Mesh(geometry, material);
 
     plane.position.set(0, 0, 0);
@@ -92,6 +95,7 @@
 
 
   function render() {
+    requestAnimationFrame(render);
     renderer.render(scene, camera);
   }
 
