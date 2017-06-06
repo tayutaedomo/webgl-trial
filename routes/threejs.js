@@ -59,6 +59,10 @@ router.get('/canvas_2', function(req, res) {
   res.render('threejs/canvas_2');
 });
 
+router.get('/canvas_3', function(req, res) {
+  res.render('threejs/canvas_3');
+});
+
 
 module.exports = router;
 

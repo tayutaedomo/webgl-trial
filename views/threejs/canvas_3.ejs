@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>three.js Canvas</title>
+  <script type="text/javascript" src="/javascripts/three.js"></script>
+</head>
+<body>
+<p>
+  Refer: <a href="http://ziyudom.com/threejs-stagecanvasanimation/" target="_blank">http://ziyudom.com/threejs-stagecanvasanimation/</a>
+</p>
+
+<script>
+  var scene = new THREE.Scene();
+
+  var fov = 75;
+
+  var height = 600;
+  var width = 400;
+  var aspect = height/width;
+
+  var near = 1;
+  var far = 1000;
+
+  var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.set(0, 15, 70);
+
+  var renderer = new THREE.WebGLRenderer();
+  renderer.setSize(height, width);
+  document.body.appendChild(renderer.domElement);
+
+  var color = 'white';
+  var directionalLight = new THREE.DirectionalLight(color);
+  directionalLight.position.set(0, 7, 10);
+  scene.add(directionalLight);
+
+  function createCanvas(scale) {
+    var text = '札幌';
+    var font_size = 14 * scale;
+    var font_family = 'Arial, Helvetica, sans-serif';
+    var width = text.length * 2 * font_size;
+    var height = font_size;
+
+    var canvas = document.createElement('canvas');
+
+    canvas.width = width;
+    canvas.height = height;
+
+    var context = canvas.getContext('2d');
+
+    context.font = font_size + "px '" + font_family + "'";
+    context.fillStyle = 'red';
+    context.textAlign = 'center';
+    context.textBaseline = 'top';
+    context.fillText(text, width / 2, 0);
+
+    console.log('createCanvas', context);
+    document.body.appendChild(canvas);
+
+    return canvas;
+  }
+
+
+  var canvas_scale = 5;
+  var texture_scale = 10
+  var canvas = createCanvas(canvas_scale);
+
+  var geometry = new THREE.PlaneGeometry(
+    canvas.width / texture_scale, canvas.height / texture_scale, 1, 1);
+
+  var texture = new THREE.CanvasTexture(canvas);
+  //texture.generateMipmaps = false;
+  texture.minFilter = THREE.LinearFilter;
+  //texture.minFilter = THREE.LinearMipMapNearestFilter;
+  //texture.minFilter = THREE.LinearMipMapLinearFilter;
+  //texture.minFilter = THREE.NearestFilter;
+  //texture.minFilter = THREE.NearestMipMapNearestFilter;
+  //texture.minFilter = THREE.NearestMipMapLinearFilter;
+
+  var material = new THREE.MeshBasicMaterial({ map: texture, color: 'orange' });
+
+  var plane = new THREE.Mesh(geometry, material);
+
+  plane.position.set(0, 0, 0);
+
+  scene.add(plane);
+
+  function render() {
+    requestAnimationFrame(render);
+    renderer.render(scene, camera);
+  }
+
+  render();
+</script>
+</body>
+</html>
+
