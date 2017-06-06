@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>three.js Canvas 2</title>
+  <script type="text/javascript" src="/javascripts/three.js"></script>
+</head>
+<body>
+<p>
+  Refer: <a href="http://ziyudom.com/threejs-stagecanvasanimation/" target="_blank">http://ziyudom.com/threejs-stagecanvasanimation/</a>
+</p>
+
+<script>
+  var scene = new THREE.Scene();
+
+  var fov = 75;
+
+  var height = 600;
+  var width = 400;
+  var aspect = height/width;
+
+  var near = 1;
+  var far = 1000;
+
+  var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.set(0, 15, 70);
+
+  var renderer = new THREE.WebGLRenderer();
+  renderer.setSize(height, width);
+  document.body.appendChild(renderer.domElement);
+
+  var color = 'white';
+  var directionalLight = new THREE.DirectionalLight(color);
+  directionalLight.position.set(0, 7, 10);
+  scene.add(directionalLight);
+
+
+  function createCanvas(width, height, callback) {
+    var canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+
+    var context = canvas.getContext("2d");
+
+    var data = [
+      "<svg xmlns='http://www.w3.org/2000/svg' width='" + width + "' height='" + height + "'>",
+      "<foreignObject width='100%' height='100%'>",
+      "<div xmlns='http://www.w3.org/1999/xhtml'>",
+      "<em>I</em> like <span style='color:white; text-shadow:0 0 2px blue;'>cheese</span>",
+      "</div>",
+      "</foreignObject>",
+      "</svg>"
+    ].join('');
+
+    var svg = new Blob([data], {type: "image/svg+xml;charset=utf-8"});
+    var DOMURL = self.URL || self.webkitURL || self;
+    var url = DOMURL.createObjectURL(svg);
+    var image = new Image();
+    console.log('url', url);
+
+    image.onload = function() {
+      console.log('image.onload');
+      //context.drawImage(image, 0, 0);
+      //DOMURL.revokeObjectURL(url);
+      callback({ image: image, context: context, canvas: canvas });
+    };
+
+    image.src = url;
+
+    context.font = "48px 'ＭＳ Ｐゴシック'";
+    context.fillStyle = "rgb(200, 30, 100)";
+    context.fillText("札幌", 0, 40);
+    callback({ image: image, context: context, canvas: canvas });
+
+    document.body.appendChild(canvas);// debug
+    //return canvas;
+  }
+
+  createCanvas(128, 128, function(payload) {
+    payload.context.drawImage(payload.image, 0, 0);
+
+    var texture = new THREE.CanvasTexture(payload.canvas);
+
+    var geometry = new THREE.PlaneGeometry(40, 40, 1, 1);
+    var material = new THREE.MeshBasicMaterial({ map: texture, color: 'orange'});
+    var plane = new THREE.Mesh(geometry, material);
+
+    plane.position.set(0, 0, 0);
+
+    scene.add(plane);
+  });
+
+
+  function render() {
+    renderer.render(scene, camera);
+  }
+
+  render();
+</script>
+</body>
+</html>
+
