@@ -31,6 +31,10 @@ router.get('/wrap_text', function(req, res) {
   res.render('canvas/wrap_text');
 });
 
+router.get('/wrap_text_2', function(req, res) {
+  res.render('canvas/wrap_text_2');
+});
+
 
 module.exports = router;
 
