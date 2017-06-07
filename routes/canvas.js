@@ -27,6 +27,10 @@ router.get('/video_2', function(req, res) {
   res.render('canvas/video_2');
 });
 
+router.get('/wrap_text', function(req, res) {
+  res.render('canvas/wrap_text');
+});
+
 
 module.exports = router;
 
