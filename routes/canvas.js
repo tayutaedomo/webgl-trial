@@ -3,20 +3,20 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/text', function(req, res) {
-  res.render('canvas/text');
+router.get('/svg', function(req, res) {
+  res.render('canvas/svg');
 });
 
-router.get('/text_2', function(req, res) {
-  res.render('canvas/text_2');
+router.get('/svg_2', function(req, res) {
+  res.render('canvas/svg_2');
 });
 
-router.get('/text_3', function(req, res) {
-  res.render('canvas/text_3');
+router.get('/svg_3', function(req, res) {
+  res.render('canvas/svg_3');
 });
 
-router.get('/text_4', function(req, res) {
-  res.render('canvas/text_4');
+router.get('/svg_4', function(req, res) {
+  res.render('canvas/svg_4');
 });
 
 router.get('/video', function(req, res) {
