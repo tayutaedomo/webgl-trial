@@ -6,8 +6,16 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'WebGL Trial' });
 });
 
-router.get('/webgl/triangle', function(req, res) {
-  res.render('webgl/triangle');
+router.get('/webgl/:view', function(req, res) {
+  res.render('webgl/' + req.params.view);
+});
+
+router.get('/threejs/:view', function(req, res) {
+  res.render('threejs/' + req.params.view);
+});
+
+router.get('/canvas/:view', function(req, res) {
+  res.render('canvas/' + req.params.view);
 });
 
 
