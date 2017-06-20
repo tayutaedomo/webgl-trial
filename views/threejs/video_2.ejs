@@ -57,6 +57,19 @@
     //video.play();
     document.body.appendChild(video);
 
+    video.addEventListener('loadstart', function(e) {
+      console.log('video event loadstart', e, video.videoWidth, video.videoHeight, e.target.videoWidth, e.target.videoHeight);
+    });
+    video.addEventListener('loadedmetadata', function(e) {
+      console.log('video event loadedmetadata', e, video.videoWidth, video.videoHeight, e.target.videoWidth, e.target.videoHeight);
+    });
+    video.addEventListener('loadeddata', function(e) {
+      console.log('video event loadeddata', e);
+    });
+    video.addEventListener('play', function(e) {
+      console.log('video event play', e);
+    });
+
     canvas = document.createElement('canvas');
     canvas.setAttribute('id', 'c');
     canvas.style.display = 'none';
