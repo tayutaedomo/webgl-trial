@@ -1,49 +1,82 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h2>Three.js</h2>
-    <ul>
-      <li><a href="/threejs/plane">Plane</a></li>
-      <li><a href="/threejs/cube">Cube</a></li>
-      <li><a href="/threejs/cube_rotate">Cube Rotate</a></li>
-      <li><a href="/threejs/cube_rotate_capture">Cube Rotate with Capture</a></li>
-      <li><a href="/threejs/cube_orbit">Cube Orbit</a></li>
-      <li><a href="/threejs/lookat">LookAt</a></li>
-      <li><a href="/threejs/lookat_2">LookAt 2</a></li>
-      <li><a href="/threejs/attendant_moving">Attendant Moving</a></li>
-      <li><a href="/threejs/attendant_moving_camera">Attendant Moving with Camera</a></li>
-      <li><a href="/threejs/css3d_youtube">CSS3D youtube</a></li>
-      <li><a href="/threejs/css3d_youtube_sprite">CSS3D youtube with sprite</a></li>
-      <li><a href="/threejs/load_obj">Load .obj</a></li>
-      <li><a href="/threejs/canvas">Canvas</a></li>
-      <li><a href="/threejs/canvas_2">Canvas 2 (Not working)</a></li>
-      <li><a href="/threejs/canvas_3">Canvas 3</a></li>
-      <li><a href="/threejs/canvas_4">Canvas 4</a></li>
-      <li><a href="/threejs/video">Video (Not working)</a></li>
-      <li><a href="/threejs/video_2">Video 2</a></li>
-      <li><a href="/threejs/capture">Capture</a></li>
-    </ul>
+<head>
+  <title><%= title %></title>
 
-    <h2>WebGL</h2>
-    <ul>
-      <li><a href="/webgl/triangle">Triangle</a></li>
-    </ul>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <h2>Canvas</h2>
-    <ul>
-      <li><a href="/canvas/svg">SVG</a></li>
-      <li><a href="/canvas/svg_2">SVG 2</a></li>
-      <li><a href="/canvas/svg_3">SVG 3</a></li>
-      <li><a href="/canvas/svg_4">SVG 4</a></li>
-      <li><a href="/canvas/video">Video (Not working)</a></li>
-      <li><a href="/canvas/video_2">Video 2</a></li>
-      <li><a href="/canvas/wrap_text">Wrap Text</a></li>
-      <li><a href="/canvas/wrap_text_2">Wrap Text 2</a></li>
-    </ul>
-  </body>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Three.js</h2>
+      <div class="list-group">
+        <a class="list-group-item" href="/threejs/plane">Plane</a>
+        <a class="list-group-item" href="/threejs/cube">Cube</a>
+        <a class="list-group-item" href="/threejs/cube_rotate">Cube Rotate</a>
+        <a class="list-group-item" href="/threejs/cube_rotate_capture">Cube Rotate with Capture</a>
+        <a class="list-group-item" href="/threejs/cube_orbit">Cube Orbit</a>
+        <a class="list-group-item" href="/threejs/lookat">LookAt</a>
+        <a class="list-group-item" href="/threejs/lookat_2">LookAt 2</a>
+        <a class="list-group-item" href="/threejs/attendant_moving">Attendant Moving</a>
+        <a class="list-group-item" href="/threejs/attendant_moving_camera">Attendant Moving with Camera</a>
+        <a class="list-group-item" href="/threejs/css3d_youtube">CSS3D youtube</a>
+        <a class="list-group-item" href="/threejs/css3d_youtube_sprite">CSS3D youtube with sprite</a>
+        <a class="list-group-item" href="/threejs/load_obj">Load .obj</a>
+        <a class="list-group-item" href="/threejs/canvas">Canvas</a>
+        <a class="list-group-item" href="/threejs/canvas_2">Canvas 2 (Not working)</a>
+        <a class="list-group-item" href="/threejs/canvas_3">Canvas 3</a>
+        <a class="list-group-item" href="/threejs/canvas_4">Canvas 4</a>
+        <a class="list-group-item" href="/threejs/video">Video (Not working)</a>
+        <a class="list-group-item" href="/threejs/video_2">Video 2</a>
+        <a class="list-group-item" href="/threejs/capture">Capture</a>
+        <a class="list-group-item" href="/threejs/capture_2">Capture 2</a>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <h2>Canvas</h2>
+      <div class="list-group">
+        <a class="list-group-item" href="/canvas/svg">SVG</a>
+        <a class="list-group-item" href="/canvas/svg_2">SVG 2</a>
+        <a class="list-group-item" href="/canvas/svg_3">SVG 3</a>
+        <a class="list-group-item" href="/canvas/svg_4">SVG 4</a>
+        <a class="list-group-item" href="/canvas/video">Video (Not working)</a>
+        <a class="list-group-item" href="/canvas/video_2">Video 2</a>
+        <a class="list-group-item" href="/canvas/wrap_text">Wrap Text</a>
+        <a class="list-group-item" href="/canvas/wrap_text_2">Wrap Text 2</a>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <h2>WebGL</h2>
+      <div class="list-group">
+        <a class="list-group-item" href="/webgl/triangle">Triangle</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
 </html>
 
