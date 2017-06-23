@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>three.js Texture</title>
+  <script type="text/javascript" src="/javascripts/three.js"></script>
+</head>
+<body>
+<p>
+  Use THREE.MeshFaceMaterial<br>
+  See: <a href="https://stackoverflow.com/questions/26087620/three-js-tile-which-has-multiple-textures-using-plane-geometry" target="_blank">https://stackoverflow.com/questions/26087620/three-js-tile-which-has-multiple-textures-using-plane-geometry</a>
+</p>
+<script>
+  var scene = new THREE.Scene();
+
+  var fov = 75;
+
+  var height = 600;
+  var width = 400;
+  var aspect = height/width;
+
+  var near = 1;
+  var far = 1000;
+
+  var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.set(0, 15, 70);
+
+  var renderer = new THREE.WebGLRenderer();
+  renderer.setSize(height, width);
+  document.body.appendChild(renderer.domElement);
+
+  var color = 'white';
+  var directionalLight = new THREE.DirectionalLight(color);
+  directionalLight.position.set(0, 7, 10);
+  scene.add(directionalLight);
+
+  var loader = new THREE.TextureLoader();
+  loader.crossOrigin = '*';
+
+  // Load textreu 1
+  (new Promise(function(resolve, reject) {
+
+    loader.load(
+      '/images/kaleidoscope_icon_blue.png',
+      function(texture) {// onLoad
+        texture.magFilter = THREE.NearestFilter;
+        texture.minFilter = THREE.NearestFilter;
+
+        resolve({ texture: texture });
+      },
+      function(e) {// onProgress
+        console.log('Progress', e);
+      },
+      function(e) {// onError
+        reject(e);
+      });
+
+  // Load textreu 2
+  }).then(function(payload) {
+    console.log('payload', payload);
+
+    return new Promise(function(resolve, reject) {
+      loader.load(
+        '/images/chompy2.png',
+        function(texture) {// onLoad
+          texture.magFilter = THREE.NearestFilter;
+          texture.minFilter = THREE.NearestFilter;
+
+          payload.texture_2 = texture;
+          resolve(payload);
+        },
+        function(e) {// onProgress
+          console.log('Progress', e);
+        },
+        function(e) {// onError
+          reject(e);
+        });
+    });
+
+  // Create materials and mesh
+  }).then(function(payload) {
+    console.log('payload', payload);
+
+    var geometry = new THREE.PlaneGeometry(40, 40, 1, 1);
+
+    var material = new THREE.MeshBasicMaterial({ map: payload.texture, transparent: true });
+    //var plane = new THREE.Mesh(geometry, material);
+
+    var material_2 = new THREE.MeshBasicMaterial({ map: payload.texture_2, transparent: true, opacity: 0.5 });
+    //var plane = new THREE.Mesh(geometry, material_2);
+
+    var plane = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial([material, material_2]));
+
+    plane.position.set(0, 0, 0);
+    scene.add(plane);
+
+  }).catch(function(e) {
+    console.error('Error occurred', e);
+  }));
+
+
+  function render() {
+    requestAnimationFrame(render);
+    renderer.render(scene, camera);
+  }
+  render();
+</script>
+</body>
+</html>
+
