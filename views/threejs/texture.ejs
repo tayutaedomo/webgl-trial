@@ -37,7 +37,7 @@
   var loader = new THREE.TextureLoader();
   loader.crossOrigin = '*';
 
-  // Load textreu 1
+  // Load texture
   (new Promise(function(resolve, reject) {
 
     loader.load(
@@ -55,7 +55,7 @@
         reject(e);
       });
 
-  // Load textreu 2
+  // Load texture 2
   }).then(function(payload) {
     console.log('payload', payload);
 
