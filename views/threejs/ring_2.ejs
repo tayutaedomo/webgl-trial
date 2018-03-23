@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>three.js Plane</title>
+  <script type="text/javascript" src="/javascripts/three.js"></script>
+  <script type="text/javascript" src="/javascripts/Tween.js"></script>
+</head>
+<body>
+<script>
+  var scene = new THREE.Scene();
+
+  var fov = 75;
+
+  var height = 600;
+  var width = 400;
+  var aspect = height/width;
+
+  var near = 1;
+  var far = 1000;
+
+  var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.set(0, 15, 70);
+
+  var renderer = new THREE.WebGLRenderer();
+  renderer.setSize(height, width);
+  document.body.appendChild(renderer.domElement);
+
+  var color = 'white';
+  var directionalLight = new THREE.DirectionalLight(color);
+  directionalLight.position.set(0, 7, 10);
+  scene.add(directionalLight);
+
+  var innerRadius = 30;
+  var outerRadius = 31;
+  var thetaSegments = 32;
+  var phiSegments = 1;
+  var thetaStart = 0;
+  var thetaLength = 2;
+
+  var geometry = new THREE.RingGeometry(innerRadius, outerRadius, thetaSegments, phiSegments, thetaStart, thetaLength);
+  var material = new THREE.MeshBasicMaterial({ color: 0x0000ff, side: THREE.DoubleSide });
+  var mesh = new THREE.Mesh( geometry, material );
+
+  mesh.position.set(0, 0, 0);
+  scene.add(mesh);
+
+  var current_value = {
+    thetaStart: thetaStart
+  };
+  var final_value = {
+    thetaStart: 6.3
+  };
+
+  var tween = new TWEEN.Tween(current_value)
+    .to(final_value, 1500)
+    .repeat(3)
+    .onUpdate(function(d) {
+      console.log('Tween.onUpdate', d);
+
+      var geometry = new THREE.RingGeometry(
+        innerRadius, outerRadius, thetaSegments, phiSegments, d.thetaStart, thetaLength);
+
+      var tmp = mesh.geometry;
+      mesh.geometry = geometry;
+
+      if (tmp) tmp.dispose();
+    })
+    .onComplete(function(){
+      console.log('Tween.onComplete');
+
+      scene.remove(mesh);
+    });
+
+  tween.start();
+
+  function render() {
+    requestAnimationFrame(render);
+
+    TWEEN.update();
+
+    renderer.render(scene, camera);
+  }
+  render();
+
+</script>
+</body>
+</html>
+
