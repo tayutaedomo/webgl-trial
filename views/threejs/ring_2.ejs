@@ -55,6 +55,10 @@
   var tween = new TWEEN.Tween(current_value)
     .to(final_value, 1500)
     .repeat(3)
+    //.easing(TWEEN.Easing.Quadratic.Out)
+    .easing(TWEEN.Easing.Circular.Out)
+    //.easing(TWEEN.Easing.Circular.InOut)
+    //.easing(TWEEN.Easing.Back.Out)
     .onUpdate(function(d) {
       console.log('Tween.onUpdate', d);
 
