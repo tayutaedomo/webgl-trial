@@ -38,11 +38,17 @@
     var canvas = document.createElement('canvas');
     canvas.width = 128;
     canvas.height = 128;
-    textContext = canvas.getContext('2d');
+    var textContext = canvas.getContext('2d');
     textContext.font = "48px 'ＭＳ Ｐゴシック'";
 
     textContext.fillStyle = "red";
     textContext.fillText("札幌", 0, 40);
+
+    // textContext.textAlign = "center";
+    // textContext.fillText("札幌", 60, 40);
+
+    // textContext.textAlign = "right";
+    // textContext.fillText("札幌", 100, 40);
 
     document.body.appendChild(canvas);
 
