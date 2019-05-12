@@ -22,6 +22,10 @@ router.get('/threejs_r71/:view', function(req, res) {
   res.render('threejs_r71/' + req.params.view);
 });
 
+router.get('/threejs_r79/:view', function(req, res) {
+  res.render('threejs_r79/' + req.params.view);
+});
+
 router.get('/canvas/:view', function(req, res) {
   res.render('canvas/' + req.params.view);
 });
