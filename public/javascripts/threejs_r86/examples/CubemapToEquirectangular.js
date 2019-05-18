@@ -6,7 +6,7 @@
 
 	var has_require = typeof require !== 'undefined'
 
-	var THREE = root.THREE || has_require && require('three')
+	var THREE = root.THREE || has_require && require('public/javascripts/threejs_r86/three')
 	if( !THREE )
 		throw new Error( 'CubemapToEquirectangular requires three.js' )
 
