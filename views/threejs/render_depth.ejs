@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>three.js Off Screen Rendering</title>
+    <script type="text/javascript" src="/javascripts/threejs_r86/three.js"></script>
+</head>
+<body style="margin: 0">
+
+<canvas id="canvas" style="width: 100%; height:100%;"></canvas>
+
+<script type="text/javascript">
+  //
+  // Refer: http://blog.shogonir.jp/entry/2017/07/23/015839
+  //
+
+  window.addEventListener("DOMContentLoaded", function() {
+    function CanvasController() {
+      this.canvas;
+      this.canvasWidth;
+      this.canvasHeight;
+
+      this.renderer;
+      this.camera;
+      this.frameCount;
+
+      this.enemyScene;
+      this.wallScene;
+      this.scenes;
+    }
+
+    var proto = CanvasController.prototype;
+
+    proto.constructor = function(canvasId) {
+      var mayBeCanvas = document.getElementById(canvasId);
+      if (mayBeCanvas == null || mayBeCanvas.getContext == null) {
+        throw new Error('not canvas');
+      }
+      this.canvas = mayBeCanvas;
+      this.canvasWidth = this.canvas.clientWidth;
+      this.canvasHeight = this.canvas.clientHeight;
+
+      this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
+      this.renderer.setClearColor(0x000000);
+      this.renderer.autoClear = false;
+
+      this.camera = new THREE.PerspectiveCamera(45, this.canvasWidth / this.canvasHeight, 0.1, 1000);
+      this.camera.position.set(0, 0, 10);
+      this.frameCount = 0;
+
+      this.enemyScene = new THREE.Scene();
+      this.wallScene = new THREE.Scene();
+      this.scenes = [
+        this.enemyScene,
+        this.wallScene
+      ];
+
+      var cubeGeometry = new THREE.CubeGeometry(2, 2, 2);
+      var cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000 });
+      var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+      this.enemyScene.add(cube);
+
+      var wallGeometry = new THREE.PlaneGeometry(2, 2);
+      var wallMaterial = new THREE.MeshBasicMaterial({ color: 0x0000FF });
+      var wall = new THREE.Mesh(wallGeometry, wallMaterial);
+      wall.position.set(-1, 0, 2);
+      this.wallScene.add(wall);
+
+      requestAnimationFrame(this.update.bind(this));
+    };
+
+    proto.update = function() {
+      this.frameCount++;
+      if (this.frameCount % 60 === 0) {
+        this.scenes = [
+          this.wallScene,
+          this.enemyScene
+        ];
+      }
+      else if (this.frameCount % 30 === 0) {
+        this.scenes = [
+          this.enemyScene,
+          this.wallScene
+        ];
+      }
+
+      this.renderer.clear();
+
+      var self = this;
+
+      this.scenes.forEach(function(scene) {
+        self.renderer.clearDepth();
+        self.renderer.render(scene, self.camera);
+      });
+
+      requestAnimationFrame(this.update.bind(this));
+    }
+
+
+    var controller = new CanvasController();
+    controller.constructor('canvas');
+    controller.update();
+  });
+</script>
+
+</body>
+</html>
