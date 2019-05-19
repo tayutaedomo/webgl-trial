@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>three.js Off Screen Rendering</title>
+    <script type="text/javascript" src="/javascripts/threejs_r86/three.js"></script>
+</head>
+<body style="margin: 0">
+
+<script type="text/javascript">
+  //
+  // Refer: https://nogson2.hatenablog.com/entry/2017/12/16/014029
+  //
+
+  window.addEventListener("DOMContentLoaded", function(){
+    var postCamera, postScene;
+    var baseCamera, baseScene;
+    var renderTarget;
+
+    var windowWidth = window.innerWidth;
+    var windowHeight = window.innerHeight;
+
+    // rendererの作成
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setClearColor('#CCC');
+
+    // canvasをbodyに追加
+    document.body.appendChild(renderer.domElement);
+
+    // canvasをリサイズ
+    renderer.setSize(windowWidth, windowHeight);
+
+    // ベースの描画処理（renderTarget への描画用）
+    baseScene = new THREE.Scene();
+
+    //ベースの描画処理用カメラ
+    baseCamera = new THREE.PerspectiveCamera(50, windowWidth / windowHeight, 0.1, 1000);
+    baseCamera.position.z = 20;
+
+    //ライトを追加
+    var baseLight = new THREE.DirectionalLight(new THREE.Color(0xffffff), 1);
+    baseLight.position.set(0, 10, 20);
+    baseScene.add(baseLight);
+
+    //ベース用のマテリアルとジオメトリ
+    var texture = THREE.ImageUtils.loadTexture('/images/shutterstock_406184365.jpg');
+    var baseGeometry = new THREE.BoxGeometry(10, 10, 10);
+    var baseMaterial = new THREE.MeshBasicMaterial({
+      map: texture,
+      wireframe: false
+    });
+    var baseMesh = new THREE.Mesh(baseGeometry, baseMaterial);
+    baseScene.add(baseMesh);
+
+    //オフスクリーンレンダリング用
+    renderTarget = new THREE.WebGLRenderTarget(256, 256, {
+      magFilter: THREE.NearestFilter,
+      minFilter: THREE.NearestFilter,
+      wrapS: THREE.ClampToEdgeWrapping,
+      wrapT: THREE.ClampToEdgeWrapping
+    });
+
+    //ポストプロセス用
+    postScene = new THREE.Scene();
+    postCamera = new THREE.PerspectiveCamera(60, windowWidth / windowHeight, 0.1, 1000);
+    postCamera.position.z = 20;
+
+    //ポストプロセス用ライト
+    var postLight = new THREE.DirectionalLight(new THREE.Color(0xffffff), 1);
+    postLight.position.set(0, 10, 20);
+    postScene.add(postLight);
+
+    //ポストプロセス用ジオメトリ、マテリアル
+    var postGeometry = new THREE.BoxGeometry(5, 5, 5);
+    var postMaterial = new THREE.MeshPhongMaterial({
+      map: renderTarget,//renderTargetをテクスチャとして渡す
+      wireframe: false
+    });
+
+    var postMesh = new THREE.Mesh(postGeometry, postMaterial);
+    postScene.add(postMesh);
+
+    render();
+
+    function render() {
+      //オフスクリーンレンダリング
+      renderer.setClearColor(new THREE.Color(0xffffff), 1.0);
+      renderer.render(baseScene, baseCamera, renderTarget);
+
+      //画面にレンダリング
+      renderer.setClearColor(new THREE.Color(0x000000), 1.0);
+      renderer.render(postScene, postCamera);
+
+      requestAnimationFrame(render);
+    }
+  });
+</script>
+
+</body>
+</html>
